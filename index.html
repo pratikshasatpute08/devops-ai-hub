@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DevOps & AI Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a0f;--card:#13131a;--card2:#161b22;--border:rgba(255,255,255,0.08);
+  --green:#3fb950;--blue:#58a6ff;--yellow:#f0c93a;--pink:#f47067;
+  --purple:#bc8cff;--cyan:#39d0d8;--amber:#EF9F27;--dim:#768390;
+  --text:#e6edf3;
+}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
+
+/* ── NAV ── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,10,15,0.92);backdrop-filter:blur(12px);z-index:50;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);}
+.logo-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#7F77DD,#58a6ff);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.nav-links{display:flex;gap:28px;}
+.nav-link{font-size:14px;color:var(--dim);cursor:pointer;text-decoration:none;transition:color .2s;}
+.nav-link:hover,.nav-link.active{color:var(--text);}
+.nav-btns{display:flex;gap:10px;align-items:center;}
+.btn-outline{background:transparent;border:1px solid var(--border);border-radius:999px;color:var(--text);padding:8px 18px;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;}
+.btn-outline:hover{border-color:rgba(255,255,255,0.25);}
+.btn-solid{background:linear-gradient(135deg,#7F77DD,#58a6ff);border:none;border-radius:999px;color:#fff;padding:8px 20px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;}
+.btn-solid:hover{opacity:.85;}
+
+/* ── PAGES ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── HOME PAGE ── */
+.hero{padding:5rem 32px 3.5rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(127,119,221,0.15) 0%,transparent 70%);pointer-events:none;}
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(127,119,221,0.12);border:1px solid rgba(127,119,221,0.3);border-radius:999px;padding:7px 18px;font-size:13px;color:#AFA9EC;margin-bottom:1.8rem;letter-spacing:.03em;}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#7F77DD;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:1.08;margin-bottom:1.2rem;letter-spacing:-.02em;}
+.g1{background:linear-gradient(90deg,#7F77DD,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.g2{background:linear-gradient(90deg,#f0c93a,#f47067);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.08rem;color:var(--dim);max-width:580px;margin:0 auto 2.2rem;line-height:1.75;}
+.search-wrap{display:flex;align-items:center;max-width:540px;margin:0 auto 1.2rem;background:var(--card2);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 7px 7px 22px;gap:8px;}
+.search-wrap input{background:none;border:none;outline:none;color:var(--text);font-size:15px;flex:1;font-family:'Space Grotesk',sans-serif;}
+.search-wrap input::placeholder{color:#444;}
+.search-btn{background:linear-gradient(135deg,#7F77DD,#58a6ff);border:none;border-radius:999px;color:#fff;padding:11px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;}
+.search-btn:hover{opacity:.85;}
+.quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:.8rem;}
+.quick-tag{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:999px;padding:6px 15px;font-size:12px;color:var(--dim);cursor:pointer;transition:all .2s;}
+.quick-tag:hover{background:rgba(127,119,221,0.12);border-color:rgba(127,119,221,0.35);color:#AFA9EC;}
+.stats-row{display:flex;justify-content:center;gap:48px;padding:2rem 32px;border-bottom:1px solid var(--border);}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7F77DD,#58a6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-lbl{font-size:13px;color:var(--dim);margin-top:2px;}
+.section{padding:2.5rem 32px;}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem;}
+.sec-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:10px;}
+.sec-dot{width:10px;height:10px;border-radius:50%;}
+.view-all{font-size:13px;color:var(--dim);cursor:pointer;transition:color .2s;}
+.view-all:hover{color:#AFA9EC;}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.3rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;border-radius:14px 14px 0 0;}
+.card.blue::before{background:linear-gradient(90deg,#58a6ff,#7F77DD);}
+.card.green::before{background:linear-gradient(90deg,#3fb950,#39d0d8);}
+.card.pink::before{background:linear-gradient(90deg,#f47067,#f0c93a);}
+.card.purple::before{background:linear-gradient(90deg,#bc8cff,#f47067);}
+.card.amber::before{background:linear-gradient(90deg,#f0c93a,#3fb950);}
+.card:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.card-cat{font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:9px;}
+.card-cat.blue{color:#58a6ff;}.card-cat.green{color:#3fb950;}.card-cat.pink{color:#f47067;}
+.card-cat.purple{color:#bc8cff;}.card-cat.amber{color:#f0c93a;}.card-cat.cyan{color:#39d0d8;}
+.card h3{font-size:.96rem;font-weight:500;line-height:1.5;margin-bottom:9px;color:var(--text);}
+.card p{font-size:13px;color:var(--dim);line-height:1.65;margin-bottom:13px;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;}
+.card-meta{font-size:12px;color:#444;}
+.cbadge{font-size:11px;padding:3px 11px;border-radius:999px;font-weight:500;}
+.cbadge.tutorial{background:rgba(63,185,80,.12);color:#3fb950;}
+.cbadge.concept{background:rgba(188,140,255,.12);color:#bc8cff;}
+.cbadge.ref{background:rgba(240,201,58,.12);color:#f0c93a;}
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.cat-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.1rem;text-align:center;cursor:pointer;transition:all .2s;}
+.cat-card:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-2px);}
+.cat-icon{font-size:24px;margin-bottom:9px;display:block;}
+.cat-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px;}
+.cat-count{font-size:11px;color:var(--dim);}
+
+/* ── GAME PAGE ── */
+.game-page{display:none;flex-direction:column;height:calc(100vh - 59px);}
+.game-page.active{display:flex;}
+.game-topbar{background:var(--card2);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.game-title{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;display:flex;align-items:center;gap:8px;}
+.game-title-icon{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#3fb950,#58a6ff);display:flex;align-items:center;justify-content:center;font-size:11px;}
+.xp-wrap{display:flex;align-items:center;gap:10px;}
+.xp-lbl{font-size:11px;color:var(--dim);}
+.xp-bar{width:130px;height:6px;background:#21262d;border-radius:999px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,#3fb950,#39d0d8);border-radius:999px;transition:width .5s;}
+.lvl-badge{background:rgba(63,185,80,.15);border:1px solid rgba(63,185,80,.3);border-radius:999px;padding:3px 11px;font-size:11px;color:var(--green);}
+.game-body{display:flex;flex:1;overflow:hidden;}
+.game-sidebar{width:210px;background:var(--bg);border-right:1px solid #21262d;padding:14px;flex-shrink:0;overflow-y:auto;}
+.msn-section-lbl{font-size:10px;color:var(--dim);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.msn-item{padding:8px 10px;border-radius:9px;cursor:pointer;margin-bottom:4px;border:1px solid transparent;transition:all .2s;}
+.msn-item.active{background:var(--card2);border-color:#30363d;}
+.msn-item.done{opacity:.5;}
+.msn-item.locked{opacity:.25;cursor:not-allowed;}
+.msn-num{font-size:10px;color:var(--dim);margin-bottom:2px;font-family:'JetBrains Mono',monospace;}
+.msn-name{font-size:12px;color:var(--text);font-weight:700;display:flex;justify-content:space-between;align-items:center;}
+.terminal-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.info-panel{background:var(--card2);border-bottom:1px solid #21262d;padding:13px 18px;flex-shrink:0;}
+.info-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.msn-title-txt{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:5px;}
+.msn-desc-txt{font-size:12px;color:var(--dim);line-height:1.65;max-width:620px;}
+.hint-btn{background:rgba(240,201,58,.08);border:1px solid rgba(240,201,58,.25);border-radius:8px;color:var(--yellow);font-size:11px;padding:6px 13px;cursor:pointer;font-family:'JetBrains Mono',monospace;white-space:nowrap;flex-shrink:0;transition:background .2s;}
+.hint-btn:hover{background:rgba(240,201,58,.15);}
+.hint-box{margin-top:10px;background:rgba(240,201,58,.06);border:1px solid rgba(240,201,58,.18);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--yellow);display:none;line-height:1.65;font-family:'JetBrains Mono',monospace;}
+.terminal-output{flex:1;overflow-y:auto;padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;}
+.terminal-output::-webkit-scrollbar{width:4px;}
+.terminal-output::-webkit-scrollbar-thumb{background:#30363d;border-radius:2px;}
+.tline{margin-bottom:1px;}
+.tline.prompt .tp{color:var(--green);}
+.tline.prompt .tc{color:var(--text);}
+.tline.out{color:var(--dim);}
+.tline.ok{color:var(--green);}
+.tline.err{color:var(--pink);}
+.tline.info{color:var(--blue);}
+.tline.warn{color:var(--yellow);}
+.tline.sys{color:var(--purple);}
+.tline.banner{color:var(--cyan);font-weight:700;}
+.input-bar{display:flex;align-items:center;padding:12px 20px;border-top:1px solid #21262d;background:var(--bg);flex-shrink:0;}
+.prompt-lbl{color:var(--green);margin-right:12px;white-space:nowrap;font-size:13px;font-family:'JetBrains Mono',monospace;}
+.cmd-input{background:none;border:none;outline:none;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:13px;flex:1;caret-color:var(--green);}
+.cmd-input::placeholder{color:#333;}
+.run-btn{background:#21262d;border:1px solid #30363d;border-radius:7px;color:var(--green);font-size:12px;padding:6px 14px;cursor:pointer;font-family:'JetBrains Mono',monospace;margin-left:10px;transition:background .2s;}
+.run-btn:hover{background:#30363d;}
+.tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;}
+.gtag{font-size:11px;padding:3px 10px;border-radius:999px;}
+.gtag.linux{background:rgba(88,166,255,.1);color:var(--blue);}
+.gtag.docker{background:rgba(57,208,216,.1);color:var(--cyan);}
+.gtag.concept{background:rgba(188,140,255,.1);color:var(--purple);}
+.celebrate{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card2);border:1px solid #30363d;border-radius:18px;padding:2.2rem 2.8rem;text-align:center;z-index:200;display:none;animation:popIn .3s ease;}
+@keyframes popIn{from{transform:translate(-50%,-50%) scale(.8);opacity:0;}to{transform:translate(-50%,-50%) scale(1);opacity:1;}}
+.celebrate h2{font-family:'Syne',sans-serif;font-size:1.5rem;color:var(--green);margin-bottom:7px;}
+.celebrate p{font-size:14px;color:var(--dim);margin-bottom:1.2rem;}
+.celebrate .next-btn{background:linear-gradient(135deg,var(--green),var(--cyan));border:none;border-radius:999px;color:#0d1117;padding:11px 28px;font-size:14px;font-weight:700;cursor:pointer;font-family:'JetBrains Mono',monospace;}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:2rem 32px;display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:var(--dim);}
+.footer-links{display:flex;gap:20px;}
+.footer-link{font-size:13px;color:var(--dim);cursor:pointer;transition:color .2s;}
+.footer-link:hover{color:var(--text);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  nav{padding:12px 16px;}
+  .nav-links{display:none;}
+  .hero{padding:3rem 16px 2.5rem;}
+  .stats-row{gap:24px;}
+  .section{padding:2rem 16px;}
+  .game-sidebar{width:160px;}
+  footer{flex-direction:column;gap:14px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#" onclick="showPage('home')">
+    <div class="logo-icon">⚙</div>
+    DevOps &amp; AI Hub
+  </a>
+  <div class="nav-links">
+    <a class="nav-link active" onclick="showPage('home')" href="#">Home</a>
+    <a class="nav-link" onclick="showPage('home')" href="#">Tutorials</a>
+    <a class="nav-link" onclick="showPage('home')" href="#">Concepts</a>
+    <a class="nav-link" onclick="showPage('home')" href="#">Reference</a>
+    <a class="nav-link" onclick="showPage('game')" href="#">🎮 Terminal Game</a>
+  </div>
+  <div class="nav-btns">
+    <button class="btn-outline" onclick="showPage('game')">🎮 Play Game</button>
+    <button class="btn-solid">+ Write</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="badge"><span class="badge-dot"></span> DevOps &amp; AI explained simply</div>
+    <h1>Learn <span class="g1">DevOps &amp; AI</span><br>the <span class="g2">fun way</span></h1>
+    <p class="hero-sub">Tutorials, concept breakdowns, and command references — all in one place. Searchable, readable, and built for everyone.</p>
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search Docker, Kubernetes, LLMs, CI/CD..."/>
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+    <div class="quick-tags">
+      <span class="quick-tag" onclick="tagSearch('Docker')">Docker</span>
+      <span class="quick-tag" onclick="tagSearch('Kubernetes')">Kubernetes</span>
+      <span class="quick-tag" onclick="tagSearch('CI/CD')">CI/CD</span>
+      <span class="quick-tag" onclick="tagSearch('LLMs')">LLMs</span>
+      <span class="quick-tag" onclick="tagSearch('Terraform')">Terraform</span>
+      <span class="quick-tag" onclick="tagSearch('Prompt Engineering')">Prompt Engineering</span>
+      <span class="quick-tag" onclick="tagSearch('GitHub Actions')">GitHub Actions</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">48</div><div class="stat-lbl">Articles</div></div>
+    <div class="stat-item"><div class="stat-num">12</div><div class="stat-lbl">Topics</div></div>
+    <div class="stat-item"><div class="stat-num">2.4k</div><div class="stat-lbl">Readers</div></div>
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-lbl">Game Levels</div></div>
+  </div>
+
+  <!-- Game CTA -->
+  <div style="padding:2rem 32px 0">
+    <div style="background:linear-gradient(135deg,rgba(63,185,80,0.08),rgba(57,208,216,0.08));border:1px solid rgba(63,185,80,0.2);border-radius:16px;padding:1.8rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:6px;">🎮 Learn by Playing — Terminal Game</div>
+        <div style="font-size:14px;color:var(--dim);line-height:1.6;">Run real Linux &amp; Docker commands in an interactive terminal.<br>8 missions · XP system · instant feedback on every command.</div>
+      </div>
+      <button class="btn-solid" style="padding:12px 28px;font-size:15px;" onclick="showPage('game')">Play Now →</button>
+    </div>
+  </div>
+
+  <!-- Featured Articles -->
+  <div class="section">
+    <div class="sec-header">
+      <div class="sec-title"><span class="sec-dot" style="background:#7F77DD"></span>Featured articles</div>
+      <span class="view-all">View all →</span>
+    </div>
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-cat blue">DevOps</div>
+        <h3>Docker from zero: containers explained with real examples</h3>
+        <p>What is a container, why it's not a VM, and how to run your first app in 10 minutes.</p>
+        <div class="card-footer"><span class="card-meta">8 min read</span><span class="cbadge tutorial">Tutorial</span></div>
+      </div>
+      <div class="card green">
+        <div class="card-cat green">AI / LLMs</div>
+        <h3>How large language models actually work — no PhD needed</h3>
+        <p>Tokens, attention, transformers — explained with plain English and simple visuals.</p>
+        <div class="card-footer"><span class="card-meta">12 min read</span><span class="cbadge concept">Concept</span></div>
+      </div>
+      <div class="card pink">
+        <div class="card-cat pink">CI/CD</div>
+        <h3>GitHub Actions: your first automated pipeline in 15 minutes</h3>
+        <p>Build, test, and deploy automatically every time you push code. Step-by-step walkthrough.</p>
+        <div class="card-footer"><span class="card-meta">15 min read</span><span class="cbadge tutorial">Tutorial</span></div>
+      </div>
+      <div class="card purple">
+        <div class="card-cat amber">Reference</div>
+        <h3>The essential kubectl command cheatsheet</h3>
+        <p>Every command you'll actually need for managing Kubernetes clusters, with examples.</p>
+        <div class="card-footer"><span class="card-meta">5 min read</span><span class="cbadge ref">Reference</span></div>
+      </div>
+      <div class="card amber">
+        <div class="card-cat cyan">AI / DevOps</div>
+        <h3>Using AI to write better Terraform infrastructure code</h3>
+        <p>How to use LLMs to scaffold, review, and debug Terraform configs faster than ever.</p>
+        <div class="card-footer"><span class="card-meta">10 min read</span><span class="cbadge tutorial">Tutorial</span></div>
+      </div>
+      <div class="card blue">
+        <div class="card-cat blue">Monitoring</div>
+        <h3>Prometheus + Grafana: set up your first dashboard</h3>
+        <p>Scrape metrics, write PromQL queries, and visualize your app health in real time.</p>
+        <div class="card-footer"><span class="card-meta">14 min read</span><span class="cbadge tutorial">Tutorial</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topics -->
+  <div class="section" style="padding-top:0">
+    <div class="sec-header">
+      <div class="sec-title"><span class="sec-dot" style="background:#3fb950"></span>Browse by topic</div>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card"><span class="cat-icon">🐳</span><div class="cat-name">Docker</div><div class="cat-count">9 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">☸️</span><div class="cat-name">Kubernetes</div><div class="cat-count">7 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">⚡</span><div class="cat-name">CI/CD</div><div class="cat-count">6 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">🤖</span><div class="cat-name">AI &amp; LLMs</div><div class="cat-count">11 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">🏗️</span><div class="cat-name">Terraform</div><div class="cat-count">5 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">🔐</span><div class="cat-name">Security</div><div class="cat-count">4 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">📊</span><div class="cat-name">Monitoring</div><div class="cat-count">6 articles</div></div>
+      <div class="cat-card"><span class="cat-icon">💬</span><div class="cat-name">Prompt Eng.</div><div class="cat-count">4 articles</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">DevOps &amp; AI Hub</div>
+    <div class="footer-links">
+      <span class="footer-link">Twitter</span>
+      <span class="footer-link">GitHub</span>
+      <span class="footer-link">RSS</span>
+      <span class="footer-link">Contact</span>
+    </div>
+    <div style="font-size:12px;color:var(--dim);">Built with ❤️ for the DevOps community</div>
+  </footer>
+
+</div><!-- end home -->
+
+<!-- ═══════════════ GAME PAGE ═══════════════ -->
+<div class="game-page" id="page-game">
+
+  <div class="game-topbar">
+    <div class="game-title">
+      <div class="game-title-icon">⚙</div>
+      DevOps &amp; AI Hub — Terminal Game
+      <span style="font-size:12px;color:var(--dim);font-weight:400;margin-left:8px;">🐧 Linux &amp; 🐳 Docker</span>
+    </div>
+    <div class="xp-wrap">
+      <span class="xp-lbl">XP</span>
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+      <span class="lvl-badge" id="lvlBadge">Lv 1</span>
+    </div>
+  </div>
+
+  <div class="game-body">
+    <div class="game-sidebar">
+      <div class="msn-section-lbl">Missions</div>
+      <div id="missionList"></div>
+    </div>
+
+    <div class="terminal-area">
+      <div class="info-panel">
+        <div class="info-top">
+          <div>
+            <div class="msn-title-txt" id="msnTitle">—</div>
+            <div class="msn-desc-txt" id="msnDesc"></div>
+            <div class="tag-row" id="msnTags"></div>
+          </div>
+          <button class="hint-btn" onclick="toggleHint()">💡 Hint</button>
+        </div>
+        <div class="hint-box" id="hintBox"></div>
+      </div>
+      <div class="terminal-output" id="termOut"></div>
+      <div class="input-bar">
+        <span class="prompt-lbl" id="promptLbl">user@devhub:~$</span>
+        <input class="cmd-input" id="cmdIn" placeholder="type a command and press Enter..." autocomplete="off" spellcheck="false"/>
+        <button class="run-btn" onclick="runCmd()">↵ Run</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end game -->
+
+<!-- Celebrate modal -->
+<div class="celebrate" id="celebrate">
+  <div style="font-size:2.8rem;margin-bottom:10px" id="celebIcon">🎉</div>
+  <h2 id="celebTitle">Mission Complete!</h2>
+  <p id="celebMsg">Great work!</p>
+  <button class="next-btn" id="celebBtn" onclick="nextMission()">Next Mission →</button>
+</div>
+
+<script>
+// ── PAGE ROUTING ──
+function showPage(name){
+  document.querySelectorAll('.page,.game-page').forEach(p=>p.classList.remove('active'));
+  if(name==='game'){
+    document.getElementById('page-game').classList.add('active');
+    setTimeout(()=>document.getElementById('cmdIn').focus(),100);
+  } else {
+    document.getElementById('page-home').classList.add('active');
+  }
+}
+
+// ── SEARCH ──
+function tagSearch(t){document.getElementById('searchInput').value=t;alert('Searching for: '+t+'\n\n(Connect this to your CMS or blog backend!)');}
+function doSearch(){
+  const q=document.getElementById('searchInput').value.trim();
+  if(q) alert('Searching for: '+q+'\n\n(Connect this to your CMS or blog backend to show real results!)');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('searchInput').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch();});
+});
+
+// ══════════════════════════════════════════
+//  TERMINAL GAME ENGINE
+// ══════════════════════════════════════════
+const missions=[
+  {
+    id:1,name:"Hello, Linux!",tags:["linux","concept"],
+    title:"Mission 1: Say Hello to Linux",
+    desc:"Linux is the OS that powers almost every server, cloud, and container. Your first command: print a message to the screen.",
+    hint:"Try: echo \"Hello Linux\"",prompt:"user@linux:~$",
+    steps:[
+      {match:c=>c.startsWith("echo"),xp:20,resp:[
+        {t:"out",m:"Output:"},
+        {t:"ok",m:"Hello Linux! 🐧"},
+        {t:"info",m:"── What happened? ──────────────────────────────"},
+        {t:"out",m:"'echo' is a built-in Linux command."},
+        {t:"out",m:"It prints text to stdout (the terminal screen)."},
+        {t:"out",m:"Every app, server, and container runs on Linux."},
+      ]}
+    ],
+    intro:[
+      {t:"banner",m:"═══════════════════════════════════════════"},
+      {t:"banner",m:" 🐧  WELCOME TO LINUX TERMINAL GAME  🐧   "},
+      {t:"banner",m:"═══════════════════════════════════════════"},
+      {t:"out",m:"Linux is open-source and powers ~96% of servers."},
+      {t:"out",m:"It's the foundation of Docker, Kubernetes & cloud."},
+      {t:"info",m:"Goal: Use 'echo' to print a message. Try it!"},
+    ]
+  },
+  {
+    id:2,name:"Files & Folders",tags:["linux"],
+    title:"Mission 2: Explore the Filesystem",
+    desc:"Linux organizes everything as files. Use 'ls' to list files, then 'pwd' to see your current location.",
+    hint:"Try: ls   (then try: pwd)",prompt:"user@linux:~$",
+    steps:[
+      {match:c=>c.trim()==="ls"||c.startsWith("ls "),xp:0,resp:[
+        {t:"out",m:"documents/   images/   app.py   README.md   .env"},
+        {t:"info",m:"── ls = List directory contents ────────────────"},
+        {t:"out",m:"Folders end with /   Hidden files start with ."},
+        {t:"warn",m:"Nice! Now try: pwd"},
+      ]},
+      {match:c=>c.trim()==="pwd",xp:25,resp:[
+        {t:"ok",m:"/home/user"},
+        {t:"info",m:"── pwd = Print Working Directory ───────────────"},
+        {t:"out",m:"Tells you exactly where you are in the filesystem."},
+        {t:"out",m:"Linux filesystem starts at / (root)."},
+        {t:"out",m:"  /              ← root (top of tree)"},
+        {t:"out",m:"  /home/user/    ← your home folder"},
+        {t:"out",m:"  /etc/          ← system config files"},
+        {t:"ok",m:"✓ You can navigate Linux!"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"Linux filesystem = a tree of files and folders."},
+      {t:"out",m:"Everything — configs, logs, apps — is a file."},
+      {t:"info",m:"Step 1: ls   Step 2: pwd"},
+    ]
+  },
+  {
+    id:3,name:"Processes",tags:["linux","concept"],
+    title:"Mission 3: Running Processes",
+    desc:"Every program running on Linux is a 'process' with a unique PID. Use 'ps aux' to see them all.",
+    hint:"Try: ps aux",prompt:"user@linux:~$",
+    steps:[
+      {match:c=>c.startsWith("ps"),xp:25,resp:[
+        {t:"out",m:"USER       PID  %CPU %MEM  COMMAND"},
+        {t:"out",m:"root         1   0.0  0.1  /sbin/init"},
+        {t:"out",m:"user       142   0.2  0.5  bash"},
+        {t:"out",m:"user       201   1.1  2.3  python app.py"},
+        {t:"out",m:"user       345   0.0  0.1  ps aux"},
+        {t:"info",m:"── Processes explained ─────────────────────────"},
+        {t:"out",m:"PID = Process ID. Every process gets a unique one."},
+        {t:"out",m:"PID 1 = the first process Linux boots (init/systemd)."},
+        {t:"out",m:"kill <PID>    → gracefully stop a process"},
+        {t:"out",m:"kill -9 <PID> → force-kill a process"},
+        {t:"ok",m:"✓ You understand Linux processes!"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"In Linux, every running program is a process."},
+      {t:"out",m:"Your browser, server, bash shell — all processes."},
+      {t:"out",m:"Each has a unique PID (Process ID)."},
+      {t:"info",m:"Try: ps aux"},
+    ]
+  },
+  {
+    id:4,name:"What is Docker?",tags:["docker","concept"],
+    title:"Mission 4: Docker — Containers 101",
+    desc:"Docker packages your app + all its dependencies into a portable 'container'. Check the Docker version first.",
+    hint:"Try: docker --version",prompt:"user@docker:~$",
+    steps:[
+      {match:c=>c.includes("docker")&&c.includes("version"),xp:20,resp:[
+        {t:"out",m:"Docker version 24.0.5, build ced0996"},
+        {t:"info",m:"── VM vs Container ─────────────────────────────"},
+        {t:"out",m:"VM:        [App] [Full OS] [Hypervisor] [Hardware]"},
+        {t:"out",m:"Container: [App] [Docker Engine] [Host OS] [Hardware]"},
+        {t:"out",m:""},
+        {t:"out",m:"Containers share the host OS kernel."},
+        {t:"out",m:"They start in milliseconds, use less RAM & disk."},
+        {t:"out",m:"'It works on my machine' → Docker solves this!"},
+        {t:"ok",m:"✓ Docker is installed!"},
+      ]}
+    ],
+    intro:[
+      {t:"banner",m:"═══════════════════════════════════════════"},
+      {t:"banner",m:" 🐳  WELCOME TO DOCKER WORLD  🐳           "},
+      {t:"banner",m:"═══════════════════════════════════════════"},
+      {t:"out",m:"Problem: 'It works on my machine but not yours!'"},
+      {t:"out",m:"Solution: Package everything in a container."},
+      {t:"info",m:"Try: docker --version"},
+    ]
+  },
+  {
+    id:5,name:"Pull an Image",tags:["docker"],
+    title:"Mission 5: Pull a Docker Image",
+    desc:"A Docker Image is a blueprint/recipe for a container. Pull the official nginx web server image from Docker Hub.",
+    hint:"Try: docker pull nginx",prompt:"user@docker:~$",
+    steps:[
+      {match:c=>c.startsWith("docker pull"),xp:25,resp:[
+        {t:"out",m:"Using default tag: latest"},
+        {t:"out",m:"latest: Pulling from library/nginx"},
+        {t:"out",m:"7264a8db6415: Pull complete"},
+        {t:"out",m:"518ab2b0b6f2: Pull complete"},
+        {t:"out",m:"Digest: sha256:04ba374043ccd2fc5c593885c0eacd..."},
+        {t:"info",m:"── Image vs Container ──────────────────────────"},
+        {t:"out",m:"IMAGE     = blueprint / recipe (read-only template)"},
+        {t:"out",m:"CONTAINER = a running instance of an image"},
+        {t:"out",m:""},
+        {t:"out",m:"Like programming:  Class = Image,  Object = Container"},
+        {t:"out",m:"Docker Hub = the 'App Store' for images (hub.docker.com)"},
+        {t:"ok",m:"✓ nginx image pulled successfully!"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"Docker Hub has 1M+ pre-built images."},
+      {t:"out",m:"nginx, python, postgres, redis — all ready to use."},
+      {t:"out",m:"Pull once → run many times anywhere."},
+      {t:"info",m:"Try: docker pull nginx"},
+    ]
+  },
+  {
+    id:6,name:"Run a Container",tags:["docker"],
+    title:"Mission 6: Run Your First Container",
+    desc:"Run the nginx container with port mapping so you can access it. Map host port 8080 → container port 80.",
+    hint:"Try: docker run -d -p 8080:80 nginx",prompt:"user@docker:~$",
+    steps:[
+      {match:c=>c.startsWith("docker run"),xp:30,resp:[
+        {t:"out",m:"a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2"},
+        {t:"info",m:"── Breaking down: docker run -d -p 8080:80 nginx ──"},
+        {t:"out",m:"docker run   → create and start a new container"},
+        {t:"out",m:"-d           → detached mode (runs in background)"},
+        {t:"out",m:"-p 8080:80   → map host port 8080 → container port 80"},
+        {t:"out",m:"nginx        → the image to create the container from"},
+        {t:"out",m:""},
+        {t:"out",m:"┌─────────────────────────────────────────┐"},
+        {t:"out",m:"│  Your Machine          Container         │"},
+        {t:"out",m:"│  localhost:8080  ──►  port 80 (nginx)   │"},
+        {t:"out",m:"└─────────────────────────────────────────┘"},
+        {t:"ok",m:"✓ nginx running! Visit http://localhost:8080"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"Containers are isolated by default."},
+      {t:"out",m:"To reach a service inside, you map ports:"},
+      {t:"out",m:"  -p <host_port>:<container_port>"},
+      {t:"info",m:"Try: docker run -d -p 8080:80 nginx"},
+    ]
+  },
+  {
+    id:7,name:"Manage Containers",tags:["docker"],
+    title:"Mission 7: List & Stop Containers",
+    desc:"Use 'docker ps' to see all running containers, then stop one with 'docker stop'.",
+    hint:"Try: docker ps   (then: docker stop a3f1b2)",prompt:"user@docker:~$",
+    steps:[
+      {match:c=>c.trim()==="docker ps"||c.trim()==="docker ps -a",xp:0,resp:[
+        {t:"out",m:"CONTAINER ID   IMAGE   STATUS          PORTS                NAMES"},
+        {t:"out",m:"a3f1b2c4d5e6   nginx   Up 3 minutes    0.0.0.0:8080->80     web_server"},
+        {t:"out",m:"b7c8d9e0f1a2   redis   Up 6 minutes                         cache"},
+        {t:"info",m:"── Container lifecycle ─────────────────────────"},
+        {t:"out",m:"created  →  running  →  stopped  →  removed"},
+        {t:"warn",m:"Now try: docker stop a3f1b2c4d5e6"},
+      ]},
+      {match:c=>c.startsWith("docker stop"),xp:35,resp:[
+        {t:"out",m:"a3f1b2c4d5e6"},
+        {t:"ok",m:"Container stopped (sent SIGTERM signal)."},
+        {t:"info",m:"── More useful commands ────────────────────────"},
+        {t:"out",m:"docker ps -a          → show ALL containers (incl. stopped)"},
+        {t:"out",m:"docker rm <id>        → remove a stopped container"},
+        {t:"out",m:"docker logs <id>      → view container output/logs"},
+        {t:"out",m:"docker exec -it <id> bash  → open shell inside container"},
+        {t:"out",m:"docker images         → list all local images"},
+        {t:"ok",m:"🏆 You can manage Docker containers!"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"You have containers running in the background."},
+      {t:"out",m:"Let's inspect and control them."},
+      {t:"info",m:"Start with: docker ps"},
+    ]
+  },
+  {
+    id:8,name:"Dockerfile",tags:["docker","concept"],
+    title:"Mission 8: Build Your Own Image",
+    desc:"A Dockerfile is a script that builds a custom Docker image for your app. Read it, then build it!",
+    hint:"Step 1: cat Dockerfile   Step 2: docker build -t myapp .",prompt:"user@docker:~$",
+    steps:[
+      {match:c=>c.includes("cat")&&c.toLowerCase().includes("dockerfile"),xp:0,resp:[
+        {t:"out",m:"FROM python:3.11-slim"},
+        {t:"out",m:"WORKDIR /app"},
+        {t:"out",m:"COPY requirements.txt ."},
+        {t:"out",m:"RUN pip install -r requirements.txt"},
+        {t:"out",m:"COPY . ."},
+        {t:"out",m:"EXPOSE 5000"},
+        {t:"out",m:'CMD ["python", "app.py"]'},
+        {t:"info",m:"── Dockerfile instructions ─────────────────────"},
+        {t:"out",m:"FROM     → base image to start from"},
+        {t:"out",m:"WORKDIR  → set working directory inside image"},
+        {t:"out",m:"COPY     → copy files from host into image"},
+        {t:"out",m:"RUN      → execute command during build"},
+        {t:"out",m:"EXPOSE   → document which port app uses"},
+        {t:"out",m:"CMD      → default command when container starts"},
+        {t:"warn",m:"Now build it: docker build -t myapp ."},
+      ]},
+      {match:c=>c.startsWith("docker build"),xp:40,resp:[
+        {t:"out",m:"[+] Building 12.3s (8/8) FINISHED"},
+        {t:"out",m:" => [1/6] FROM python:3.11-slim"},
+        {t:"out",m:" => [2/6] WORKDIR /app"},
+        {t:"out",m:" => [3/6] COPY requirements.txt ."},
+        {t:"out",m:" => [4/6] RUN pip install -r requirements.txt"},
+        {t:"out",m:" => [5/6] COPY . ."},
+        {t:"out",m:" => [6/6] EXPOSE 5000"},
+        {t:"out",m:""},
+        {t:"ok",m:"Successfully built myapp:latest 🎉"},
+        {t:"info",m:"── What just happened? ─────────────────────────"},
+        {t:"out",m:"Docker executed each Dockerfile line as a layer."},
+        {t:"out",m:"Layers are cached — unchanged layers skip rebuild."},
+        {t:"out",m:"Run it: docker run -d -p 5000:5000 myapp"},
+        {t:"ok",m:"🏆 YOU CAN BUILD DOCKER IMAGES! Mission complete!"},
+      ]}
+    ],
+    intro:[
+      {t:"info",m:"Real apps need custom images with your code."},
+      {t:"out",m:"You write a Dockerfile → Docker builds an image."},
+      {t:"out",m:"Step 1: Read it with: cat Dockerfile"},
+      {t:"info",m:"Step 2: Build with: docker build -t myapp ."},
+    ]
+  }
+];
+
+let curMission=0, curStep=0, xp=0, hintOn=false, done=[], cmdHistory=[], histIdx=-1;
+const $=id=>document.getElementById(id);
+
+function tline(type,msg){
+  const d=document.createElement('div');
+  d.className='tline '+type;
+  d.textContent=msg;
+  $('termOut').appendChild(d);
+  $('termOut').scrollTop=$('termOut').scrollHeight;
+}
+
+function tprompt(cmd){
+  const m=missions[curMission];
+  const d=document.createElement('div');
+  d.className='tline prompt';
+  d.innerHTML=`<span class="tp">${m.prompt}</span> <span class="tc">${esc(cmd)}</span>`;
+  $('termOut').appendChild(d);
+  $('termOut').scrollTop=$('termOut').scrollHeight;
+}
+
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function loadMission(idx){
+  curMission=idx; curStep=0; hintOn=false;
+  $('hintBox').style.display='none';
+  $('termOut').innerHTML='';
+  const m=missions[idx];
+  $('msnTitle').textContent=m.title;
+  $('msnDesc').textContent=m.desc;
+  $('hintBox').textContent='💡 '+m.hint;
+  $('promptLbl').textContent=m.prompt;
+  const tr=$('msnTags'); tr.innerHTML='';
+  m.tags.forEach(t=>{
+    const s=document.createElement('span');
+    s.className='gtag '+t;
+    s.textContent=t==='linux'?'🐧 Linux':t==='docker'?'🐳 Docker':'💡 Concept';
+    tr.appendChild(s);
+  });
+  m.intro.forEach(l=>tline(l.t,l.m));
+  renderSidebar();
+}
+
+function renderSidebar(){
+  const list=$('missionList'); list.innerHTML='';
+  missions.forEach((m,i)=>{
+    const isDone=done.includes(i);
+    const isLocked=i>0&&!done.includes(i-1)&&i!==curMission;
+    const d=document.createElement('div');
+    d.className='msn-item'+(i===curMission?' active':'')+(isDone?' done':'')+(isLocked?' locked':'');
+    d.innerHTML=`<div class="msn-num">Mission ${m.id}</div><div class="msn-name">${m.name}<span>${isDone?'✓':i===curMission?'▶':'○'}</span></div>`;
+    if(!isLocked) d.onclick=()=>loadMission(i);
+    list.appendChild(d);
+  });
+}
+
+function toggleHint(){
+  hintOn=!hintOn;
+  $('hintBox').style.display=hintOn?'block':'none';
+}
+
+function runCmd(){
+  const input=$('cmdIn');
+  const cmd=input.value.trim();
+  if(!cmd) return;
+  cmdHistory.unshift(cmd); histIdx=-1;
+  input.value='';
+  tprompt(cmd);
+  if(cmd==='clear'){$('termOut').innerHTML='';return;}
+  if(cmd==='help'){
+    tline('info','── help ────────────────────────────────────────');
+    tline('out','Type the command from the mission description.');
+    tline('out','Click 💡 Hint for a clue.');
+    tline('warn','Available: echo, ls, pwd, ps, docker commands...');
+    return;
+  }
+  const m=missions[curMission];
+  const step=m.steps[curStep];
+  if(step&&step.match(cmd)){
+    step.resp.forEach(l=>tline(l.t,l.m));
+    if(step.xp>0){xp+=step.xp;updateXP();}
+    curStep++;
+    if(curStep>=m.steps.length) setTimeout(()=>celebrate(m),500);
+  } else {
+    tline('err','bash: command not recognized for this mission.');
+    tline('warn','💡 Hint: '+m.hint);
+  }
+}
+
+function updateXP(){
+  const pct=Math.min((xp/250)*100,100);
+  $('xpFill').style.width=pct+'%';
+  $('lvlBadge').textContent='Lv '+(Math.floor(xp/50)+1);
+}
+
+function celebrate(m){
+  done.push(curMission);
+  renderSidebar();
+  const picks=[
+    ['🎉','Mission Complete!','XP earned! Keep going!'],
+    ['🏆','Excellent Work!','You nailed it!'],
+    ['⚡','Level Up!','New skills unlocked!'],
+    ['🐳','Container Master!','Docker power!'],
+  ];
+  const p=picks[Math.floor(Math.random()*picks.length)];
+  $('celebIcon').textContent=p[0];
+  $('celebTitle').textContent=p[1];
+  $('celebMsg').textContent=p[2]+' (+'+m.steps.reduce((a,s)=>a+s.xp,0)+' XP)';
+  const last=curMission>=missions.length-1;
+  $('celebBtn').textContent=last?'🏆 All Missions Done!':'Next Mission →';
+  $('celebrate').style.display='block';
+}
+
+function nextMission(){
+  $('celebrate').style.display='none';
+  if(curMission<missions.length-1) loadMission(curMission+1);
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  $('cmdIn').addEventListener('keydown',e=>{
+    if(e.key==='Enter') runCmd();
+    if(e.key==='ArrowUp'){if(histIdx<cmdHistory.length-1){histIdx++;$('cmdIn').value=cmdHistory[histIdx];}}
+    if(e.key==='ArrowDown'){if(histIdx>0){histIdx--;$('cmdIn').value=cmdHistory[histIdx];}else{histIdx=-1;$('cmdIn').value='';}}
+  });
+  loadMission(0);
+});
+</script>
+</body>
+</html>
