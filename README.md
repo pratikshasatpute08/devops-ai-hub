@@ -159,10 +159,9 @@ This project is open source under the [MIT License](LICENSE).
 
 ## 👤 Author
 
-Made with ❤️ by **[Your Name]**
+Made with by pratikshasatpute08
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Website: [yourusername.github.io](https://yourusername.github.io)
+- GitHub: [https://github.com/pratikshasatpute08/]
 
 ---
 
