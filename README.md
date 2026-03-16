@@ -16,7 +16,9 @@
 ---
 
 ## Project Images
-https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/2.png
+
+![project images](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/3.png)
+
 
 ## 📖 About
 
