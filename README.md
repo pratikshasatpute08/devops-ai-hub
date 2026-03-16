@@ -17,11 +17,11 @@
 
 ## Project Images  
 
-![project images](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/2.png)
-![Image 2](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/3.png)
-![Image 3](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/4.png)
-
-
+![project images](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/myproject/2.png
+)
+![Image 2](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/myproject/3.png
+)
+![Image 3](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/myproject/4.png)
 ## 📖 About
 
 **DevOps & AI Hub** is a free learning website for anyone who wants to understand DevOps and AI — explained simply, with real examples.
