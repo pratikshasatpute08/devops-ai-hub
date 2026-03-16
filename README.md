@@ -15,7 +15,7 @@
 
 ---
 
-## Project Images
+## Project Images  
 
 ![project images](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/2.png)
 ![Image 2](https://github.com/pratikshasatpute08/devops-ai-hub/blob/main/3.png)
